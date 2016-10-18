@@ -22,7 +22,6 @@ extern keymap_config_t keymap_config;
 #define _SYMB 4
 #define _FUNC 5
 
-// Shortcut for the layer matrixes
 #define _L _LANG
 
 enum planck_keycodes {
@@ -244,6 +243,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+<<<<<<< HEAD
     case LANG:
       if (record->event.pressed) {
 	/*
@@ -268,6 +268,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+=======
+>>>>>>> Added new layout tallum for planck. Based on callum.
   }
   return true;
 }
