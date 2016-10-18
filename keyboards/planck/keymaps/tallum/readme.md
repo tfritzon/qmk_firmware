@@ -27,7 +27,6 @@ fairly easily be reconfigured for any other combination.
 really good.
 
 # Callum's Original Readme
-
 This is a layout for the grid planck, built with a few ideals in mind. These ideals are just my opinion mind! The great thing about *qmk* is that we can all afford to have different opinions about what makes a good layout:
 
 - Minimal response times should be maintained. i.e. keys that react differently depending on whether they are tapped or held, keys that react differently if they are double tapped, etc. should be avoided --- since they inevitably send their keycode later than a normal key, interrupting the immediate feedback from the screen. Therefore we restrict ourselves to chording.
