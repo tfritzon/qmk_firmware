@@ -243,7 +243,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-<<<<<<< HEAD
+    case LANG:
+      if (record->event.pressed) {
     case LANG:
       if (record->event.pressed) {
 	/*
@@ -268,8 +269,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-=======
->>>>>>> Added new layout tallum for planck. Based on callum.
   }
   return true;
 }
