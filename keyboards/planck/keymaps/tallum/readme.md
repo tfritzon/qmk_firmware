@@ -73,8 +73,4 @@ Again none of the modifiers are overwritten so that shortcuts involving numbers 
 The only thing of note here is that `bl+` and `bl-` are short for *backlight up* and *backlight down* respectively, and in firmware are actually `KC_PAUS` and `KC_SLCK` respectively, since *macOS* interprets these as the backlight keys.
 
 ## Other changes from the default
-<<<<<<< HEAD
 I have LEDs and sound disabled, simply because I have no need of them.
-=======
-I have LEDs and sound disabled, simply because I have no need of them.
->>>>>>> Added new layout tallum for planck. Based on callum.
