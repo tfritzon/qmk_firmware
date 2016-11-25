@@ -1,5 +1,4 @@
 # The tallum planck layout
-
 This layout is based on callum's excellent layout.
 
 tl;dr:
