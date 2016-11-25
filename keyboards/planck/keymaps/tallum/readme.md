@@ -1,4 +1,32 @@
-# callum’s planck layout
+# The tallum planck layout
+
+This layout is based on callum's excellent layout.
+
+tl;dr:
+* It's qwerty instead of colemak.
+* Ctrl is on the home row, because I use emacs alot.
+* Backspace is top right.
+* Return is righ on the home row.
+* -/' have been moved around to accomodate the changes.
+* Play, next, previous are now in the order prev, play, next
+* Multi-language support.
+
+## Multi-language support
+The function layer have a new LANG key, which do two things:
+
+* Switch to the language layer where some of the keys are
+  rearranged to have native language characters in a more natural
+  configuration.
+* Send the switch input language key sequence to the host.
+
+Currently, it's configured for Swedish on Ubuntu, but it can
+fairly easily be reconfigured for any other combination.
+
+## TODO
+* Update with recent changes in callum's layout, because they are
+really good.
+
+# Callum's Original Readme
 
 This is a layout for the grid planck, built with a few ideals in mind. These ideals are just my opinion mind! The great thing about *qmk* is that we can all afford to have different opinions about what makes a good layout:
 
