@@ -41,6 +41,12 @@ enum {
   CT_RAC
 };
 
+// tap modfiers hack, part 1
+enum {
+  CT_LAC,
+  CT_RAC
+};
+
 // Fillers to make layering more clear
 #define _______ KC_TRNS
 #define XXXXXXX KC_NO
@@ -203,7 +209,6 @@ qk_tap_dance_action_t tap_dance_actions[] = {
   }
 };
 
-
 void matrix_init_user() {
   set_unicode_input_mode(UC_LNX);
 }
@@ -265,4 +270,3 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
   return true;
 }
-
