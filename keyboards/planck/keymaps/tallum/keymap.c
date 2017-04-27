@@ -140,16 +140,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 typedef struct {
   bool alt;
   bool finished_once;
-} td_lac_state_t;
+  uint16_t keycode;
+} td_state_t;
 
-typedef struct {
-  bool alt;
-  bool finished_once;
-} td_rac_state_t;
-
-
-void _td_lac_finished (qk_tap_dance_state_t *state, void *user_data) {
-  td_lac_state_t *s = (td_lac_state_t *)user_data;
+void _td_finished (qk_tap_dance_state_t *state, void *user_data) {
+  td_state_t *s = (td_state_t *)user_data;
   
   if (s->finished_once)
     return;
@@ -161,47 +156,17 @@ void _td_lac_finished (qk_tap_dance_state_t *state, void *user_data) {
   } else {
     s->alt = false;
     register_code (KC_LSFT);
-    register_code (KC_LBRACKET);
+    register_code (s->keycode);
   }
 }
 
-void _td_rac_finished (qk_tap_dance_state_t *state, void *user_data) {
-  td_rac_state_t *s = (td_rac_state_t *)user_data;
-  
-  if (s->finished_once)
-    return;
-    
-  s->finished_once = true;
-  if (state->pressed) {
-    s->alt = true;
-    register_code (KC_LALT);
-  } else {
-    s->alt = false;
-    register_code (KC_LSFT);
-    register_code (KC_RBRACKET);
-  }
-}
-
-void _td_lac_reset (qk_tap_dance_state_t *state, void *user_data) {
-  td_lac_state_t *s = (td_lac_state_t *)user_data;
+void _td_reset (qk_tap_dance_state_t *state, void *user_data) {
+  td_state_t *s = (td_state_t *)user_data;
 
   if (s->alt) {
     unregister_code (KC_LALT);
   } else {
-    unregister_code (KC_LBRACKET);
-    unregister_code (KC_LSFT);
-  }
-  
-  s->finished_once = false;
-}
-
-void _td_rac_reset (qk_tap_dance_state_t *state, void *user_data) {
-  td_rac_state_t *s = (td_rac_state_t *)user_data;
-
-  if (s->alt) {
-    unregister_code (KC_LALT);
-  } else {
-    unregister_code (KC_RBRACKET);
+    unregister_code (s->keycode);
     unregister_code (KC_LSFT);
   }
   
@@ -210,12 +175,12 @@ void _td_rac_reset (qk_tap_dance_state_t *state, void *user_data) {
 
 qk_tap_dance_action_t tap_dance_actions[] = {
   [CT_LAC]  = {
-    .fn = { NULL, _td_lac_finished, _td_lac_reset },
-    .user_data = (void *)&((td_lac_state_t) { false, false })
+    .fn = { NULL, _td_finished, _td_reset },
+    .user_data = (void *)&((td_state_t) { false, false, KC_LBRACKET })
   },
   [CT_RAC]  = {
-    .fn = { NULL, _td_rac_finished, _td_rac_reset },
-    .user_data = (void *)&((td_rac_state_t) { false, false })
+    .fn = { NULL, _td_finished, _td_reset },
+    .user_data = (void *)&((td_state_t) { false, false, KC_RBRACKET })
   }
 };
 
