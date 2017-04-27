@@ -52,6 +52,12 @@ enum {
   CT_RAC
 };
 
+// tap modfiers hack, part 1
+enum {
+  CT_LAC,
+  CT_RAC
+};
+
 // Fillers to make layering more clear
 #define _______ KC_TRNS
 #define XXXXXXX KC_NO
