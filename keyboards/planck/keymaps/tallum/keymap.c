@@ -5,6 +5,8 @@
 #endif
 #include "eeconfig.h"
 
+#include "config.h"
+
 extern keymap_config_t keymap_config;
 
 // Based on the Callum layout.
@@ -30,6 +32,12 @@ enum planck_keycodes {
   LANG
 };
 
+// tap modfiers hack, part 1
+enum {
+  CT_LAC,
+  CT_RAC
+};
+
 // Fillers to make layering more clear
 #define _______ KC_TRNS
 #define XXXXXXX KC_NO
@@ -42,34 +50,35 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * | RCtr |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |Enter |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   "  |   /  |
+ * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |   -  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Func | RAlt | LAlt | GUI  | Symb |    Space    | Move | GUI  | RAlt | LAlt |   -  |
+ * | Func | RAlt | GUI  | LAlt | Symb |    Space    | Move | GUI  | RAlt | LAlt |   "  |
  * `-----------------------------------------------------------------------------------'
  */
 [_BASE] = {
   {KC_TAB,     KC_Q,    KC_W,    KC_E,  KC_R,   KC_T,   KC_Y,  KC_U,    KC_I,    KC_O,    KC_P, KC_BSPC},
   {KC_RCTL,    KC_A,    KC_S,    KC_D,  KC_F,   KC_G,   KC_H,  KC_J,    KC_K,    KC_L, KC_SCLN, KC_ENT },
-  {KC_LSFT,    KC_Z,    KC_X,    KC_C,  KC_V,   KC_B,   KC_N,  KC_M, KC_COMM,  KC_DOT, KC_QUOT, KC_SLSH},
-  {FUNC,    KC_RALT, KC_LALT, KC_LGUI,  SYMB, KC_SPC, KC_SPC,  MOVE, KC_RGUI, KC_RALT, KC_LALT, KC_MINS}
+  {KC_LSPO,    KC_Z,    KC_X,    KC_C,  KC_V,   KC_B,   KC_N,  KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_MINS},
+  /*{   FUNC, KC_RALT, KC_LGUI, KC_LALT,  SYMB, KC_SPC, KC_SPC,  MOVE, KC_RGUI, KC_RALT, KC_LALT, KC_QUOT}*/
+  {   FUNC, KC_RALT, MT(MOD_LGUI, KC_LBRACKET), TD(CT_LAC),  SYMB, KC_SPC, KC_SPC,  MOVE, TD(CT_RAC), MT(MOD_RGUI, KC_RBRACKET), KC_RSPC, KC_QUOT}
 },
 
 /* LANG:SWE
  * ,-----------------------------------------------------------------------------------.
- * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | RCtr |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |  [Å  |Enter |
+ * |      |      |      |      |      |      |      |      |      |      |  [Å  |      |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |  ;Ö  |  "Ä  |
+ * |      |      |      |      |      |      |      |      |      |      |  ;Ö  |  "Ä  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Func | RAlt | LAlt | GUI  | Symb |    Space    | Move | GUI  | RAlt | LAlt |   /  |
+ * |      |      |      |      |      |             |      |      |      |      |   /  |
  * `-----------------------------------------------------------------------------------'
  */
 [_LANG] = {
-  {KC_TAB,     KC_Q,    KC_W,    KC_E,  KC_R,   KC_T,   KC_Y,  KC_U,    KC_I,    KC_O,    KC_P, KC_BSPC},
-  {KC_RCTL,    KC_A,    KC_S,    KC_D,  KC_F,   KC_G,   KC_H,  KC_J,    KC_K,    KC_L, KC_LBRC,  KC_ENT},
-  {KC_LSFT,    KC_Z,    KC_X,    KC_C,  KC_V,   KC_B,   KC_N,  KC_M, KC_COMM,  KC_DOT, KC_SCLN, KC_QUOT},
-  {FUNC,    KC_RALT, KC_LALT, KC_LGUI,  SYMB, KC_SPC, KC_SPC,  MOVE, KC_RGUI, KC_RALT, KC_LALT, KC_SLSH}
+  {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
+  {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_LBRC, _______},
+  {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_SCLN, KC_QUOT},
+  {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_SLSH}
 },
 
 /* MOVE
@@ -92,19 +101,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* SYMB
  * ,-----------------------------------------------------------------------------------.
- * |  Esc |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Esc  |
+ * |  Esc |   !  |   @  |   #  |   $  |   %  |   ^  |   7  |   8  |   9  |   -  | Esc  |
  * |-----------------------------------------------------------------------------------.
- * |  Del |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  | Del  |
+ * |  Del |   &  |   *  |   ~  |   {  |   }  |   =  |   4  |   5  |   6  |   +  | Del  |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |   ~  |   |  |   +  |   [  |   ]  |  {   |   }  |   =  |   \  |   `  |   <  |
+ * |      |   (  |   )  |   `  |   [  |   ]  |  0   |   1  |   2  |   3  |   \  |   |  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |             |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_SYMB] = {
-  {KC_ESC,     KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_ESC},
-  {KC_DEL,  KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN,  KC_DEL},
-  {_______, KC_TILD, KC_PIPE, KC_PLUS, KC_LBRC, KC_RBRC, KC_LCBR, KC_RCBR,  KC_EQL, KC_BSLS,  KC_GRV, KC_NUBS},
+  {KC_ESC,  KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC, KC_CIRC,    KC_7,    KC_8,    KC_9, KC_MINS,  KC_ESC},
+  {KC_DEL,  KC_AMPR, KC_ASTR, KC_HASH, KC_LCBR, KC_RCBR,  KC_EQL,    KC_4,    KC_5,    KC_6, KC_PLUS,  KC_DEL},
+  {_______, KC_LPRN, KC_RPRN,  KC_GRV, KC_LBRC, KC_RBRC,    KC_0,    KC_1,    KC_2,    KC_3, KC_BSLS, KC_PIPE},
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______}
 },
 
@@ -127,6 +136,89 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 }
 
 };
+
+typedef struct {
+  bool alt;
+  bool finished_once;
+} td_lac_state_t;
+
+typedef struct {
+  bool alt;
+  bool finished_once;
+} td_rac_state_t;
+
+
+void _td_lac_finished (qk_tap_dance_state_t *state, void *user_data) {
+  td_lac_state_t *s = (td_lac_state_t *)user_data;
+  
+  if (s->finished_once)
+    return;
+    
+  s->finished_once = true;
+  if (state->pressed) {
+    s->alt = true;
+    register_code (KC_LALT);
+  } else {
+    s->alt = false;
+    register_code (KC_LSFT);
+    register_code (KC_LBRACKET);
+  }
+}
+
+void _td_rac_finished (qk_tap_dance_state_t *state, void *user_data) {
+  td_rac_state_t *s = (td_rac_state_t *)user_data;
+  
+  if (s->finished_once)
+    return;
+    
+  s->finished_once = true;
+  if (state->pressed) {
+    s->alt = true;
+    register_code (KC_LALT);
+  } else {
+    s->alt = false;
+    register_code (KC_LSFT);
+    register_code (KC_RBRACKET);
+  }
+}
+
+void _td_lac_reset (qk_tap_dance_state_t *state, void *user_data) {
+  td_lac_state_t *s = (td_lac_state_t *)user_data;
+
+  if (s->alt) {
+    unregister_code (KC_LALT);
+  } else {
+    unregister_code (KC_LBRACKET);
+    unregister_code (KC_LSFT);
+  }
+  
+  s->finished_once = false;
+}
+
+void _td_rac_reset (qk_tap_dance_state_t *state, void *user_data) {
+  td_rac_state_t *s = (td_rac_state_t *)user_data;
+
+  if (s->alt) {
+    unregister_code (KC_LALT);
+  } else {
+    unregister_code (KC_RBRACKET);
+    unregister_code (KC_LSFT);
+  }
+  
+  s->finished_once = false;
+}
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+  [CT_LAC]  = {
+    .fn = { NULL, _td_lac_finished, _td_lac_reset },
+    .user_data = (void *)&((td_lac_state_t) { false, false })
+  },
+  [CT_RAC]  = {
+    .fn = { NULL, _td_rac_finished, _td_rac_reset },
+    .user_data = (void *)&((td_rac_state_t) { false, false })
+  }
+};
+
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
