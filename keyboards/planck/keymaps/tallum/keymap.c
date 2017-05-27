@@ -17,9 +17,10 @@ extern keymap_config_t keymap_config;
 // entirely and just use numbers.
 #define _BASE 0
 #define _LANG 1
-#define _MOVE 2
-#define _SYMB 3
-#define _FUNC 4
+#define _LNGS 2
+#define _MOVE 3
+#define _SYMB 4
+#define _FUNC 5
 
 // Shortcut for the layer matrixes
 #define _L _LANG
@@ -29,7 +30,9 @@ enum planck_keycodes {
   MOVE,
   SYMB,
   FUNC,
-  LANG
+  LANG,
+  LINUX,
+  MAC
 };
 
 // tap modfiers hack, part 1
@@ -52,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |   -  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Func | RAlt | GUI  | LAlt | Symb |    Space    | Move | GUI  | RAlt | LAlt |   "  |
+ * |   \  | RAlt | GUI  | LAlt | Symb |    Space    | Move | GUI  | RAlt | LAlt |   "  |
  * `-----------------------------------------------------------------------------------'
  */
 [_BASE] = {
@@ -60,7 +63,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {KC_RCTL,    KC_A,    KC_S,    KC_D,  KC_F,   KC_G,   KC_H,  KC_J,    KC_K,    KC_L, KC_SCLN, KC_ENT },
   {KC_LSPO,    KC_Z,    KC_X,    KC_C,  KC_V,   KC_B,   KC_N,  KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_MINS},
   /*{   FUNC, KC_RALT, KC_LGUI, KC_LALT,  SYMB, KC_SPC, KC_SPC,  MOVE, KC_RGUI, KC_RALT, KC_LALT, KC_QUOT}*/
-  {   FUNC, KC_RALT, MT(MOD_LGUI, KC_LBRACKET), TD(CT_LAC),  SYMB, KC_SPC, KC_SPC,  MOVE, TD(CT_RAC), MT(MOD_RGUI, KC_RBRACKET), KC_RSPC, KC_QUOT}
+  {KC_BSLS, KC_RALT, MT(MOD_LGUI, KC_LBRACKET), TD(CT_LAC),  SYMB, KC_SPC, KC_SPC,  MOVE, TD(CT_RAC), MT(MOD_RGUI, KC_RBRACKET), KC_RSPC, KC_QUOT}
 },
 
 /* LANG:SWE
@@ -74,11 +77,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      |             |      |      |      |      |   /  |
  * `-----------------------------------------------------------------------------------'
  */
+/*
 [_LANG] = {
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_LBRC, _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_SCLN, KC_QUOT},
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_SLSH}
+},
+*/
+[_LANG] = {
+  {  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,  _______},
+  {  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, UC(0xe5),  _______},
+  {MO(_LNGS), _______, _______, _______, _______, _______, _______, _______, _______, _______, UC(0xf6), UC(0xe4)},
+  {  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,MO(_LNGS),  KC_SLSH}
 },
 
 /* MOVE
@@ -123,16 +134,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |-----------------------------------------------------------------------------------.
  * | LANG | Prev | Play | Next | BL+  |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * | LANG | Mute | Vol- | Vol+ | BL-  | LANG |      |      |      |      |      |      |
+ * | LINUX| Mute | Vol- | Vol+ | BL-  | LANG |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      |      |      |      |Reset |
+ * | MAC  |      |      |      |      |             |      |      |      |      |Reset |
  * `-----------------------------------------------------------------------------------'
  */
 [_FUNC] = {
-  { KC_F12,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11},
-  { TG(_L), KC_MPRV, KC_MPLY, KC_MNXT, KC_PAUS, _______, _______, _______, _______, _______, _______, _______},
-  {   LANG, KC_MUTE, KC_VOLD, KC_VOLU, KC_SLCK,    LANG, _______, _______, _______, _______, _______, _______},
-  {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   RESET}
+  {KC_F12,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11},
+  {TG(_L), KC_MPRV, KC_MPLY, KC_MNXT, KC_PAUS, _______, _______, _______, _______, _______, _______, _______},
+  { LINUX, KC_MUTE, KC_VOLD, KC_VOLU, KC_SLCK,    LANG, _______, _______, _______, _______, _______, _______},
+  {   MAC, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   RESET}
+},
+
+/* Shifted lang layer. */
+#define _S LSFT
+[_LNGS] = {
+  {    _______, _S(KC_Q), _S(KC_W), _S(KC_E), _S(KC_R), _S(KC_T), _S(KC_Y), _S(KC_U),    _S(KC_I),   _S(KC_O),  _S(KC_P),     KC_BSPC},
+  {    KC_RCTL, _S(KC_A), _S(KC_S), _S(KC_D), _S(KC_F), _S(KC_G), _S(KC_H), _S(KC_J),    _S(KC_K),   _S(KC_L),  UC(0xc5),      KC_ENT},
+  {    _______, _S(KC_Z), _S(KC_X), _S(KC_C), _S(KC_V), _S(KC_B), _S(KC_N), _S(KC_M), _S(KC_COMM), _S(KC_DOT),  UC(0xd6),    UC(0xc4)},
+  {_S(KC_BSLS),  _______,  _______,  _______,  _______,  _______,  _______,  _______,     _______,    _______,   _______, _S(KC_SLSH)}
 }
 
 };
@@ -185,6 +205,10 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 };
 
 
+void matrix_init_user() {
+  set_unicode_input_mode(UC_LNX);
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case MOVE:
@@ -217,11 +241,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case LANG:
       if (record->event.pressed) {
+	/*
 	register_code(KC_LGUI);
 	register_code(KC_SPC);
 	unregister_code(KC_SPC);
 	unregister_code(KC_LGUI);
+	*/
 	layer_invert(_LANG);
+      }
+      return false;
+      break;
+    case LINUX:
+      if (record->event.pressed) {
+	set_unicode_input_mode(UC_LNX);
+      }
+      return false;
+      break;
+    case MAC:
+      if (record->event.pressed) {
+	set_unicode_input_mode(UC_OSX);
       }
       return false;
       break;
