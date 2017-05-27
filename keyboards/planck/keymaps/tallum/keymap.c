@@ -213,6 +213,10 @@ void matrix_init_user() {
   set_unicode_input_mode(UC_LNX);
 }
 
+void matrix_init_user() {
+  set_unicode_input_mode(UC_LNX);
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case MOVE:
@@ -270,4 +274,3 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
   return true;
 }
-
