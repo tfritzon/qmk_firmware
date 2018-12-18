@@ -22,6 +22,7 @@ extern keymap_config_t keymap_config;
 #define _SYMB 4
 #define _FUNC 5
 
+// Shortcut for the layer matrixes
 #define _L _LANG
 
 enum planck_keycodes {
@@ -32,18 +33,6 @@ enum planck_keycodes {
   LANG,
   LINUX,
   MAC
-};
-
-// tap modfiers hack, part 1
-enum {
-  CT_LAC,
-  CT_RAC
-};
-
-// tap modfiers hack, part 1
-enum {
-  CT_LAC,
-  CT_RAC
 };
 
 // tap modfiers hack, part 1
