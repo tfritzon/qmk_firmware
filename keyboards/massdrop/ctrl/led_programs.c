@@ -50,6 +50,12 @@ led_setup_t leds_green[] = {
     { .end = 1 },
 };
 
+//Warm Green
+led_setup_t leds_warm_green[] = {
+    { .hs = 0, .he = 100, .rs = 63, .re = 63, .gs = 255, .ge = 255, .bs = 0, .be = 0, .ef = EF_NONE },
+    { .end = 1 },
+};
+
 //Blue
 led_setup_t leds_blue[] = {
     { .hs = 0, .he = 100, .rs = 0, .re = 0, .gs = 0, .ge = 0, .bs = 255, .be = 255, .ef = EF_NONE },
@@ -110,6 +116,7 @@ void *led_setups[] = {
     leds_yellow,
     leds_red,
     leds_green,
+    leds_warm_green,
     leds_blue,
     leds_white,
     leds_white_with_red_stripe,
